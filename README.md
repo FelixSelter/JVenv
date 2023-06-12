@@ -18,6 +18,10 @@ The repository currently contains very basic rust code that allows for a cross p
 
 ### List of cli commands and their function
 
+##### java-home
+
+- Returns the java home for a specific directory so the shell script can update the environment variables when it is activated
+
 ##### auto-scan
 
 - Tries to find installed jvms on the system to add them to the config file
