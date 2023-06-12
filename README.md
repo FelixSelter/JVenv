@@ -33,3 +33,15 @@ The repository currently contains very basic rust code that allows for a cross p
 ##### integrate
 
 - automatically configure a shell to work with the jvenv script
+
+##### Needs name
+
+- Change the global java version
+
+##### Needs name
+
+- Change the java version of the current shell
+
+##### Needs name
+
+- Create a project by creating a .java-version file with the given java version
