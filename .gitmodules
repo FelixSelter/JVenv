@@ -1,0 +1,3 @@
+[submodule "JVenv.wiki"]
+	path = JVenv.wiki
+	url = git@github.com:FelixSelter/JVenv.wiki
