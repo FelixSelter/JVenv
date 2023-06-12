@@ -29,6 +29,11 @@ The repository currently contains very basic rust code that allows for a cross p
 ##### install
 
 - install a specific jdk (disco api?)
+- sdkman support?
+
+##### uninstall
+
+- uninstall a specific jdk
 
 ##### integrate
 
@@ -45,3 +50,13 @@ The repository currently contains very basic rust code that allows for a cross p
 ##### Needs name
 
 - Create a project by creating a .java-version file with the given java version
+
+##### add
+
+- Add a jdk to the config and create an alias
+
+##### remove
+
+- Remove a jdk from the config
+
+##### something to uninstall this tool
