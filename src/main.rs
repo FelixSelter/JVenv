@@ -4,10 +4,11 @@ use clap::{builder::Str, Parser, Subcommand};
 
 mod commands;
 mod config;
+mod util;
 
 #[derive(Debug, Parser)]
 #[clap(
-    name = "JVenv",
+    name = "JVEnv",
     author = "Felix Selter",
     version,
     about = "description"

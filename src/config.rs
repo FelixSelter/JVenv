@@ -10,10 +10,11 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Clone)]
 pub struct JavaHome {
     pub path: PathBuf,
+    pub name: String,
 }
 impl JavaHome {
-    pub fn new(path: PathBuf) -> Self {
-        Self { path }
+    pub fn new(path: PathBuf, name: String) -> Self {
+        Self { path, name }
     }
 }
 
@@ -25,7 +26,7 @@ pub struct Config {
 lazy_static! {
     static ref CONFIG_PATH: PathBuf = {
         let mut config_path = config_dir().unwrap();
-        config_path.push("JEnv");
+        config_path.push("JVEnv");
         create_dir_all(config_path.clone()).unwrap();
         config_path.push("config.json");
         config_path
@@ -38,6 +39,8 @@ impl Config {
             .ok()
             .and_then(|file| serde_json::from_reader::<File, Config>(file).ok())
             .unwrap_or_default()
+
+        //TODO: Validate the config. Check that all java_homes are still intact
     }
 
     pub fn save(&self) -> Result<(), std::io::Error> {
