@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-use clap::{builder::Str, Parser, Subcommand};
+use clap::{Parser, Subcommand};
 
 mod commands;
 mod config;

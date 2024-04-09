@@ -37,11 +37,11 @@ pub fn parse_java_version(
     java_executable: &PathBuf,
 ) -> Result<JavaVersion, JavaVersionParsingError> {
     let output = Command::new(&java_executable)
-        .arg("--version")
+        .arg("-version")
         .output()
         .map_err(JavaVersionParsingError::JavaExecutionError)?;
 
-    let binding = String::from_utf8_lossy(&output.stdout); //Avoid drop
+    let binding = String::from_utf8_lossy(&output.stderr); //Avoid drop. Also note that for some reason java version information is always printed to stderr
     let capture = VERSION_MATCHER
         .captures(
             binding

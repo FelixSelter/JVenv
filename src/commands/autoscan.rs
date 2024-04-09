@@ -75,7 +75,11 @@ where
         .filter(|path| !path.is_symlink())
         .filter(|path| path.is_executable())
         .filter_map(|path| path.canonicalize().ok())
-        .filter(move |path| !blacklist.iter().any(|java_home| &java_home.path == path))
+        .filter(move |path| {
+            !blacklist
+                .iter()
+                .any(|java_home| &java_home.path == path.parent().unwrap().parent().unwrap())
+        })
         .unique()
 }
 
