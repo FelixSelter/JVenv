@@ -1,12 +1,17 @@
 use std::path::PathBuf;
 
-use clap::{Parser, Subcommand};
+use clap::{builder::Str, Parser, Subcommand};
 
-mod autoscan;
+mod commands;
 mod config;
 
 #[derive(Debug, Parser)]
-#[clap(name = "jenv", author = "Felix Selter", version, about = "description")]
+#[clap(
+    name = "JVenv",
+    author = "Felix Selter",
+    version,
+    about = "description"
+)]
 struct Arguments {
     #[clap(subcommand)]
     command: Action,
@@ -16,15 +21,34 @@ struct Arguments {
 
 enum Action {
     AutoScan,
-    Add { name: String, path: PathBuf },
-    Remove { name: String },
+    Register { name: String, path: PathBuf },
+    Unregister { name: String },
+    List,
+    JavaHome,
+    Install { name: String },
+    Uninstall { name: String },
+    Integrate,
+    UninstallJVenv,
+    Global { name: String },
+    Use { name: String },
+    Init { name: String },
+    Restore,
 }
 
 fn main() {
-    //Execute the command
     match Arguments::parse().command {
-        Action::AutoScan => autoscan::execute(),
-        Action::Add { name, path } => todo!(),
-        Action::Remove { name } => todo!(),
+        Action::AutoScan => commands::autoscan::execute(),
+        Action::Register { name, path } => commands::register::execute(name, path),
+        Action::Unregister { name } => commands::unregister::execute(name),
+        Action::List => commands::list::execute(),
+        Action::JavaHome => commands::javahome::execute(),
+        Action::Install { name } => commands::install::execute(name),
+        Action::Uninstall { name } => commands::uninstall::execute(name),
+        Action::Integrate => commands::integrate::execute(),
+        Action::UninstallJVenv => commands::uninstalljvenv::execute(),
+        Action::Global { name } => commands::global::execute(name),
+        Action::Use { name } => commands::r#use::execute(name),
+        Action::Init { name } => commands::init::execute(name),
+        Action::Restore => commands::restore::execute(),
     }
 }

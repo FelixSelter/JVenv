@@ -15,6 +15,7 @@ The repository currently contains very basic rust code that allows for a cross p
 - bash
 - powershell
 - fish
+- cmd
 
 ### List of cli commands and their function
 
@@ -28,7 +29,7 @@ The repository currently contains very basic rust code that allows for a cross p
 
 ##### list
 
-- lists all the jvms with their alias name from the config. Shows the current active global version
+- lists all the jvms with their alias name from the config. Shows the current active global version, shell version and local version
 
 ##### install
 
@@ -43,24 +44,36 @@ The repository currently contains very basic rust code that allows for a cross p
 
 - automatically configure a shell to work with the jvenv script
 
-##### Needs name
+##### global
 
 - Change the global java version
 
-##### Needs name
+##### use
 
 - Change the java version of the current shell
 
-##### Needs name
+##### init
 
 - Create a project by creating a .java-version file with the given java version
 
-##### add
+##### register
 
 - Add a jdk to the config and create an alias
 
-##### remove
+##### unregister
 
 - Remove a jdk from the config
 
-##### something to uninstall this tool
+##### uninstall-jvenv
+
+##### restore
+
+- Load a backup of the environment variables
+
+##### Needs name
+
+- Something to validate the config. This should probably happen automatically
+
+### Shell scripts
+
+Every shell needs a way to reload its environment variables after the jvenv script has been executed. Shells should also reload on directory change and open

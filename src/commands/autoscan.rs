@@ -8,12 +8,11 @@ use which::which_all;
 
 use crate::config::{Config, JavaHome};
 
-fn ask<I>(java_homes: I) -> Vec<JavaHome>
+/// Asks the user for every path if they want to add it to jvenv and adds them to the config if desired
+fn ask<I>(java_homes: I, config: &mut Config)
 where
     I: Iterator<Item = PathBuf>,
 {
-    let mut r = Vec::new();
-
     for java_home in java_homes {
         if Confirm::with_theme(&ColorfulTheme::default())
             .with_prompt(format!(
@@ -23,13 +22,22 @@ where
             .interact()
             .unwrap()
         {
-            r.push(JavaHome::new(java_home));
+            config.java_homes.push(JavaHome::new(java_home));
+            if let Err(e) = config.save() {
+                println!("- There was an error saving the config file: {}", e);
+            } else {
+                println!("- Saved")
+            }
         }
     }
-
-    r
 }
 
+/// Filters an iterator of paths:
+/// - only returns files name java
+/// - removes symlinks / shortcuts
+/// - only executable files
+/// - converts them to absolute paths
+/// - removes any blacklisted JavaHomes
 fn filter_paths<'a, I>(blacklist: &'a Vec<JavaHome>, paths: I) -> impl Iterator<Item = PathBuf> + 'a
 where
     I: Iterator<Item = PathBuf> + 'a,
@@ -51,9 +59,10 @@ pub fn execute() -> () {
         .interact()
         .unwrap()
     {
-        for java_home in ask(filter_paths(&config.java_homes, which_all("java").unwrap())) {
-            config.java_homes.push(java_home);
-        }
+        ask(
+            filter_paths(&config.java_homes.clone(), which_all("java").unwrap()),
+            &mut config,
+        );
     }
 
     if Confirm::with_theme(&ColorfulTheme::default())
@@ -61,16 +70,19 @@ pub fn execute() -> () {
         .interact()
         .unwrap()
     {
-        for java_home in ask(filter_paths(
-            &config.java_homes,
-            WalkDir::new("/")
-                .follow_links(true)
-                .into_iter()
-                .filter_entry(|entry| !entry.path().starts_with("/proc"))
-                .filter_map(|e| e.ok())
-                .map(|entry| entry.into_path()),
-        )) {
-            config.java_homes.push(java_home);
-        }
+        println!("Once all java homes have been found just aboard execution with ctrl+c to avoid going through all your files.");
+        ask(
+            filter_paths(
+                &config.java_homes.clone(),
+                WalkDir::new("/")
+                    .follow_links(true)
+                    .into_iter()
+                    // Can be skipped for performance. Only contains hardware information
+                    .filter_entry(|entry| !entry.path().starts_with("/proc"))
+                    .filter_map(|e| e.ok())
+                    .map(|entry| entry.into_path()),
+            ),
+            &mut config,
+        );
     }
 }

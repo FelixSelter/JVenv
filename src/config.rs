@@ -7,7 +7,7 @@ use std::{
 use dirs::config_dir;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct JavaHome {
     pub path: PathBuf,
 }
@@ -17,14 +17,13 @@ impl JavaHome {
     }
 }
 
-#[derive(Serialize, Default, Deserialize)]
+#[derive(Serialize, Default, Deserialize, Clone)]
 pub struct Config {
     pub java_homes: Vec<JavaHome>,
 }
 
 lazy_static! {
     static ref CONFIG_PATH: PathBuf = {
-        println!("DAMN IT. CONFIG INITIALIZED!!!!");
         let mut config_path = config_dir().unwrap();
         config_path.push("JEnv");
         create_dir_all(config_path.clone()).unwrap();
