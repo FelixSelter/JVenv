@@ -70,10 +70,14 @@ The repository currently contains very basic rust code that allows for a cross p
 
 - Load a backup of the environment variables
 
-##### Needs name
+##### rename
 
-- Something to validate the config. This should probably happen automatically
+- rename a java installation
 
 ### Shell scripts
 
 Every shell needs a way to reload its environment variables after the jvenv script has been executed. Shells should also reload on directory change and open
+
+### Other
+
+The config needs to be validated after loading. Check if all java installations still exist etc.

@@ -6,6 +6,7 @@ pub mod integrate;
 pub mod javahome;
 pub mod list;
 pub mod register;
+pub mod rename;
 pub mod restore;
 pub mod uninstall;
 pub mod uninstalljvenv;

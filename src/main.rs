@@ -34,6 +34,7 @@ enum Action {
     Use { name: String },
     Init { name: String },
     Restore,
+    Rename { old: String, new: String },
 }
 
 fn main() {
@@ -51,5 +52,6 @@ fn main() {
         Action::Use { name } => commands::r#use::execute(name),
         Action::Init { name } => commands::init::execute(name),
         Action::Restore => commands::restore::execute(),
+        Action::Rename { old, new } => commands::rename::execute(old, new),
     }
 }

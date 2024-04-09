@@ -21,6 +21,7 @@ impl JavaHome {
 #[derive(Serialize, Default, Deserialize, Clone)]
 pub struct Config {
     pub java_homes: Vec<JavaHome>,
+    pub global_java: String,
 }
 
 lazy_static! {

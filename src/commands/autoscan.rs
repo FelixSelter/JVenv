@@ -42,7 +42,15 @@ where
                 .interact_text()
                 .unwrap();
 
-            config.java_homes.push(JavaHome::new(java_executable, name));
+            config.java_homes.push(JavaHome::new(
+                java_executable
+                    .parent()
+                    .unwrap()
+                    .parent()
+                    .unwrap()
+                    .to_path_buf(),
+                name,
+            ));
             if let Err(e) = config.save() {
                 println!("There was an error saving the config file: {}", e);
             } else {
